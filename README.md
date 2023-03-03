@@ -1,5 +1,5 @@
 # HelloKitty
-Powerful malware that destroys your pc, with hello kitty's cuteness.
+Powerful malware that destroys your pc, with Hello Kitty's cuteness.
 
 INFO: 
 
