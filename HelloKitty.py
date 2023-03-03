@@ -200,4 +200,5 @@ def window_flush():
     tk.mainloop()
 
 if __name__ == "__main__":
+    #AntiVm() Optional
     Warning()
