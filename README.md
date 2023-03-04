@@ -14,7 +14,7 @@ By using this software, you automatically agree to the above.
 
 • Setup
 
-'''
+```
 1.
 Releases > Download th Latest version. 
 
@@ -22,4 +22,4 @@ or
 
 2.
 Download .zip > unzip > cd C:\Users\USERNAME\Downloads\HelloKitty-main\HelloKitty-main > python3 HelloKitty.py
-'''
+```
