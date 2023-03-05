@@ -1,7 +1,7 @@
 # HelloKitty
 Powerful malware that destroys your pc, with Hello Kitty's cuteness.
 
-![HelloKitty](IMG\HelloKitty.ico)
+![HelloKitty](IMG/HelloKitty.ico)
 
 • INFO
 
