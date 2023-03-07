@@ -14,6 +14,7 @@ from tkinter import messagebox
 import simpleaudio as sa
 from threading import Thread
 import numpy as np
+import ctypes
 from ctypes import windll
 from ctypes import c_int
 from ctypes import c_uint
