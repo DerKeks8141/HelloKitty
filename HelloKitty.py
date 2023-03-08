@@ -158,7 +158,7 @@ def Window():
     def on_closing():
         window_flush()
 
-    HelloKittyLabel = Label(window, text="Please don't kill me", font=("Arial",30,"bold"), fg="white", bg="pink")
+    HelloKittyLabel = Label(window, text="Do you like me?", font=("Arial",30,"bold"), fg="white", bg="pink")
     HelloKittyLabel.pack()
     HelloKittyLabel.place(x=370,y=100)
 
