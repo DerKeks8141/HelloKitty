@@ -31,16 +31,14 @@ from win32gui import *
 from win32ui import *
 from win32con import *
 from win32file import *
+import win32comext.shell.shell as shell
+ASADMIN = 'asadmin'
 
-if not ctypes.windll.shell32.IsUserAnAdmin():
-  while True:
-    if ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1) != 42:
-      continue
-
-    else:
-      break
-else:
-  pass
+if sys.argv[-1] != ASADMIN:
+    script = os.path.abspath(sys.argv[0])
+    params = ' '.join([script] + sys.argv[1:] + [ASADMIN])
+    shell.ShellExecuteEx(lpVerb='runas', lpFile=sys.executable, lpParameters=params)
+    sys.exit(0)
 
 sample_rate = 44100
 duration = 3
